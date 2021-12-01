@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="Console\Commands\" />
+    <Folder Include="One\" />
     <Folder Include="Utility\" />
     <Folder Include="OldOne\" />
   </ItemGroup>
@@ -18,6 +19,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="OldOne\OldDayOneInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="One\DayOneInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="One\DayOneTestInputA.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
