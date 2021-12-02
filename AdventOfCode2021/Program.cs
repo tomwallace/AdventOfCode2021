@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 
 namespace AdventOfCode2021;
 
-// TODO: Add Github repo and link into this and post to Teams channel
 internal class Program
 {
     private static string _linePrefix;
