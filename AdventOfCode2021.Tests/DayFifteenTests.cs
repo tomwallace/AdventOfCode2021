@@ -25,8 +25,6 @@ public class DayFifteenTests
         Assert.Equal(315, result);
     }
 
-    // Note: took 2.8 min
-    /*
     [Fact]
     public void PartA_Actual()
     {
@@ -35,7 +33,6 @@ public class DayFifteenTests
 
         Assert.Equal("745", result);
     }
-    */
 
     [Fact]
     public void PartB_Actual()
@@ -43,6 +40,6 @@ public class DayFifteenTests
         var sut = new DayFifteen();
         var result = sut.PartB();
 
-        Assert.Equal("-1", result);
+        Assert.Equal("3002", result);
     }
 }
