@@ -99,6 +99,24 @@
     <None Update="Twelve\DayTwelveTestInputC.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="TwentyFive\DayTwentyFiveInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TwentyFive\DayTwentyFiveTestInputA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TwentyTwo\DayTwentyTwoInput.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TwentyTwo\DayTwentyTwoTestInputA.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TwentyTwo\DayTwentyTwoTestInputB.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TwentyTwo\DayTwentyTwoTestInputC.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Twenty\DayTwentyInput.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
