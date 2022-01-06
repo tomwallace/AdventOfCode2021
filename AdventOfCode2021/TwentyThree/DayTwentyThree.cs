@@ -2,7 +2,10 @@
 
 namespace AdventOfCode2021.TwentyThree;
 
-// TODO: Clean up and provide attribution - https://github.com/encse/adventofcode/blob/master/2021/Day23/Solution.cs
+// NOTE - I struggled with this problem a good deal.  I tried two different approaches and ended up scrapping them
+// both without even solving Part A.  In working through the issues afterward, I noted that I made some incorrect
+// assumptions and should have read the problem more carefully.  In the end, I used another person's solution, which
+// I am providing a link to for attribution: https://github.com/encse/adventofcode/blob/master/2021/Day23/Solution.cs
 public class DayTwentyThree : IAdventProblemSet
 {
     /// <inheritdoc />
@@ -44,9 +47,10 @@ public class DayTwentyThree : IAdventProblemSet
             lines.Insert(4, "  #D#B#A#C#");
         }
         return string.Join("\n", lines);
-    } 
+    }
 
-    public int FindLeastEnergy(string input) {
+    public int FindLeastEnergy(string input)
+    {
         var maze = Maze.Parse(input);
 
         var q = new PriorityQueue<Maze, int>();
@@ -55,15 +59,19 @@ public class DayTwentyThree : IAdventProblemSet
         q.Enqueue(maze, 0);
         cost.Add(maze, 0);
 
-        while (q.Count > 0) {
+        while (q.Count > 0)
+        {
             maze = q.Dequeue();
 
-            if (maze.Finished()) {
+            if (maze.Finished())
+            {
                 return cost[maze];
             }
 
-            foreach (var n in Neighbours(maze)) {
-                if (cost[maze] + n.cost < cost.GetValueOrDefault(n.maze, int.MaxValue)) {
+            foreach (var n in Neighbours(maze))
+            {
+                if (cost[maze] + n.cost < cost.GetValueOrDefault(n.maze, int.MaxValue))
+                {
                     cost[n.maze] = cost[maze] + n.cost;
                     q.Enqueue(n.maze, cost[n.maze]);
                 }
@@ -73,11 +81,13 @@ public class DayTwentyThree : IAdventProblemSet
         throw new Exception();
     }
 
-    public int stepCost(char actor) {
+    public int stepCost(char actor)
+    {
         return actor == 'A' ? 1 : actor == 'B' ? 10 : actor == 'C' ? 100 : 1000;
     }
 
-    public int getIcolDst(char ch) {
+    public int getIcolDst(char ch)
+    {
         return
             ch == 'A' ? 3 :
             ch == 'B' ? 5 :
@@ -86,21 +96,26 @@ public class DayTwentyThree : IAdventProblemSet
             throw new Exception();
     }
 
-    public (Maze maze, int cost) HallwayToRoom(Maze maze) {
-        for (var icol = 1; icol < 12; icol++) {
+    public (Maze maze, int cost) HallwayToRoom(Maze maze)
+    {
+        for (var icol = 1; icol < 12; icol++)
+        {
             var ch = maze.ItemAt(new Point(1, icol));
 
-            if (ch == '.') {
+            if (ch == '.')
+            {
                 continue;
             }
 
             var icolDst = getIcolDst(ch);
 
-            if (maze.CanMoveToDoor(icol, icolDst) && maze.CanEnterRoom(ch)) {
+            if (maze.CanMoveToDoor(icol, icolDst) && maze.CanEnterRoom(ch))
+            {
                 var steps = Math.Abs(icolDst - icol);
                 var pt = new Point(1, icolDst);
 
-                while (maze.ItemAt(pt.Below) == '.') {
+                while (maze.ItemAt(pt.Below) == '.')
+                {
                     pt = pt.Below;
                     steps++;
                 }
@@ -112,39 +127,48 @@ public class DayTwentyThree : IAdventProblemSet
         return (maze, 0);
     }
 
-    public IEnumerable<(Maze maze, int cost)> RoomToHallway(Maze maze) {
+    public IEnumerable<(Maze maze, int cost)> RoomToHallway(Maze maze)
+    {
         var hallwayColumns = new int[] { 1, 2, 4, 6, 8, 10, 11 };
 
-        foreach (var roomColumn in new[] { 3, 5, 7, 9 }) {
-
-            if (maze.FinishedColumn(roomColumn)) {
+        foreach (var roomColumn in new[] { 3, 5, 7, 9 })
+        {
+            if (maze.FinishedColumn(roomColumn))
+            {
                 continue;
             }
 
             var stepsV = 0;
             var ptSrc = new Point(1, roomColumn);
-            while (maze.ItemAt(ptSrc) == '.') {
+            while (maze.ItemAt(ptSrc) == '.')
+            {
                 ptSrc = ptSrc.Below;
                 stepsV++;
             }
 
             var ch = maze.ItemAt(ptSrc);
-            if (ch == '#') {
+            if (ch == '#')
+            {
                 continue;
             }
 
-            foreach (var dj in new[] { -1, 1 }) {
+            foreach (var dj in new[] { -1, 1 })
+            {
                 var stepsH = 0;
                 var ptDst = new Point(1, roomColumn);
-                while (maze.ItemAt(ptDst) == '.') {
-
-                    if (hallwayColumns.Contains(ptDst.icol)) {
+                while (maze.ItemAt(ptDst) == '.')
+                {
+                    if (hallwayColumns.Contains(ptDst.icol))
+                    {
                         yield return (maze.Move(ptSrc, ptDst), (stepsV + stepsH) * stepCost(ch));
                     }
 
-                    if (dj == -1) {
+                    if (dj == -1)
+                    {
                         ptDst = ptDst.Left;
-                    } else {
+                    }
+                    else
+                    {
                         ptDst = ptDst.Right;
                     }
                     stepsH++;
@@ -153,32 +177,36 @@ public class DayTwentyThree : IAdventProblemSet
         }
     }
 
-    public IEnumerable<(Maze maze, int cost)> Neighbours(Maze maze) {
+    public IEnumerable<(Maze maze, int cost)> Neighbours(Maze maze)
+    {
         var hallwayToRoom = HallwayToRoom(maze);
         return hallwayToRoom.cost != 0 ? new[] { hallwayToRoom } : RoomToHallway(maze);
     }
 }
 
-
-public record Point(int irow, int icol) {
+public record Point(int irow, int icol)
+{
     public Point Below => new Point(irow + 1, icol);
     public Point Above => new Point(irow - 1, icol);
     public Point Left => new Point(irow, icol - 1);
     public Point Right => new Point(irow, icol + 1);
 }
 
-public record Maze {
-
+public record Maze
+{
     const int columnMaskA = (1 << 11) | (1 << 15) | (1 << 19) | (1 << 23);
     const int columnMaskB = (1 << 12) | (1 << 16) | (1 << 20) | (1 << 24);
     const int columnMaskC = (1 << 13) | (1 << 17) | (1 << 21) | (1 << 25);
     const int columnMaskD = (1 << 14) | (1 << 18) | (1 << 22) | (1 << 26);
 
-    public static Maze Parse(string input) {
+    public static Maze Parse(string input)
+    {
         var maze = new Maze(columnMaskA, columnMaskB, columnMaskC, columnMaskD);
         var map = input.Split("\n");
-        foreach (var irow in Enumerable.Range(0, map.Length)) {
-            foreach (var icol in Enumerable.Range(0, map[0].Length)) {
+        foreach (var irow in Enumerable.Range(0, map.Length))
+        {
+            foreach (var icol in Enumerable.Range(0, map[0].Length))
+            {
                 maze = maze.SetItem(
                     new Point(irow, icol), irow < map.Length && icol < map[irow].Length ? map[irow][icol] : '#');
             }
@@ -188,7 +216,8 @@ public record Maze {
 
     int a, b, c, d;
 
-    Maze(int a, int b, int c, int d) {
+    Maze(int a, int b, int c, int d)
+    {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -196,7 +225,8 @@ public record Maze {
     }
 
     int BitFromPoint(Point pt) =>
-        (pt.irow, pt.icol) switch {
+        (pt.irow, pt.icol) switch
+        {
             (1, 1) => 1 << 0,
             (1, 2) => 1 << 1,
             (1, 3) => 1 << 2,
@@ -233,7 +263,8 @@ public record Maze {
         };
 
     public bool CanEnterRoom(char ch) =>
-        ch switch {
+        ch switch
+        {
             'A' => (b & columnMaskA) == 0 && (c & columnMaskA) == 0 && (d & columnMaskA) == 0,
             'B' => (a & columnMaskB) == 0 && (c & columnMaskB) == 0 && (d & columnMaskB) == 0,
             'C' => (a & columnMaskC) == 0 && (b & columnMaskC) == 0 && (d & columnMaskC) == 0,
@@ -241,13 +272,17 @@ public record Maze {
             _ => throw new Exception()
         };
 
-    public bool CanMoveToDoor(int icolFrom, int icolTo) {
-        Point step(Point pt) {
+    public bool CanMoveToDoor(int icolFrom, int icolTo)
+    {
+        Point step(Point pt)
+        {
             return icolFrom < icolTo ? pt.Right : pt.Left;
         }
         var pt = step(new Point(1, icolFrom));
-        while (pt.icol != icolTo) {
-            if (this.ItemAt(pt) != '.') {
+        while (pt.icol != icolTo)
+        {
+            if (this.ItemAt(pt) != '.')
+            {
                 return false;
             }
             pt = step(pt);
@@ -256,7 +291,8 @@ public record Maze {
     }
 
     public bool FinishedColumn(int icol) =>
-        icol switch {
+        icol switch
+        {
             3 => a == columnMaskA,
             5 => b == columnMaskB,
             7 => c == columnMaskC,
@@ -267,7 +303,8 @@ public record Maze {
     public bool Finished() =>
         FinishedColumn(3) && FinishedColumn(5) && FinishedColumn(7) && FinishedColumn(9);
 
-    public char ItemAt(Point pt) {
+    public char ItemAt(Point pt)
+    {
         var bit = BitFromPoint(pt);
         return
             bit == 1 << 31 ? '#' :
@@ -281,16 +318,20 @@ public record Maze {
     public Maze Move(Point from, Point to) =>
         SetItem(to, ItemAt(from)).SetItem(from, '.');
 
-    private Maze SetItem(Point pt, char ch) {
-        if (ch == '#') {
+    private Maze SetItem(Point pt, char ch)
+    {
+        if (ch == '#')
+        {
             return this;
         }
         var bit = BitFromPoint(pt);
-        if (bit == 1 << 31) {
+        if (bit == 1 << 31)
+        {
             return this;
         }
 
-        return ch switch {
+        return ch switch
+        {
             '.' => new Maze(
                 a & ~bit,
                 b & ~bit,

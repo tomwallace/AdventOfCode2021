@@ -40,6 +40,6 @@ public class DayTwentyFiveTests
         var sut = new DayTwentyFive();
         var result = sut.PartB();
 
-        Assert.Equal("-1", result);
+        Assert.Equal("Got all the stars!", result);
     }
 }

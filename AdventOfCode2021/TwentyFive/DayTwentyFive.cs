@@ -27,9 +27,7 @@ public class DayTwentyFive : IAdventProblemSet
     /// <inheritdoc />
     public string PartB()
     {
-        // TODO: Can only count when all stars gotten
-        var filePath = @"TwentyFive\DayTwentyFiveInput.txt";
-        return "";
+        // There is no Part B for Day 25.  You get it by completing all of the other puzzles.
+        return "Got all the stars!";
     }
-
 }
