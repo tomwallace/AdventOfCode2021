@@ -12,3 +12,6 @@
 # bin and obj
 **/bin/*
 **/obj/*
+
+# VS stuff
+**.user

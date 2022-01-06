@@ -35,13 +35,12 @@ public class DayTwentyTwoTests
         Assert.Equal("601104", result);
     }
 
-    // 1262883317221163 too low
     [Fact]
     public void PartB_Actual()
     {
         var sut = new DayTwentyTwo();
         var result = sut.PartB();
 
-        Assert.Equal("-1", result);
+        Assert.Equal("1262883317822267", result);
     }
 }

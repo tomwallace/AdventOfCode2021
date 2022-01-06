@@ -69,7 +69,6 @@ public class DiceGame
             var p2S = p2Score;
             var hasWon = false;
 
-            // TODO: Clean up
             if (isPlayerOne)
             {
                 p1Pos += diceRoll.Key;
